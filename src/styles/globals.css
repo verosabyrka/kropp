@@ -28,3 +28,9 @@ h1, h2, h3 {
   text-transform: uppercase;
   color: var(--color-light);
 }
+
+:focus-visible {
+  outline: 2px dashed var(--color-light);
+  outline-offset: 4px;
+  transition-duration: 0s !important;
+}
