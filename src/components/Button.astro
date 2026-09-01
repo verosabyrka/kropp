@@ -1,21 +1,25 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
 
-interface Props extends HTMLAttributes<'button'> {
+interface Props extends HTMLAttributes<'button'>, HTMLAttributes<'a'> {
   class?: string
   type?: 'button' | 'submit' | 'reset'
+  href?: string
   isTransparent?: boolean
 }
 
 const {
   class: className,
   type = 'button',
+  href,
   isTransparent = false,
   ...rest
 } = Astro.props
+
+const Element = href ? 'a' : 'button'
 ---
 
-<button
+<Element
   class:list={[
     'button',
     {
@@ -23,11 +27,12 @@ const {
     },
     className,
   ]}
-  type={type}
+  href={href}
+  type={href ? undefined : type}
   {...rest}
 >
   <slot />
-</button>
+</Element>
 
 <style>
   .button {
