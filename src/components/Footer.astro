@@ -218,11 +218,17 @@ const socialLinks = [
 
   .footer-soc1als-link {
     display: flex;
-    width: 23px;
+    width: 24px;
+    height: 24px;
     color: var(--color-light);
 
     &:hover {
       color: var(--color-light-gray);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -232,5 +238,41 @@ const socialLinks = [
 
   .footer-copyright {
     font-size: 14px;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-main {
+      padding-top: 80px;
+      padding-bottom: 50px;
+    }
+
+    .footer-header {
+      display: flex;
+      flex-direction: column;
+      row-gap: 30px;
+    }
+
+    .footer-body {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 30px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .footer-body {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-main {
+      padding-top: 50px;
+    }
+
+    .footer-header:not(:last-child) {
+      margin-bottom: 30px;
+    }
+
+    .footer-subscribe:not(:last-child) {
+      margin-bottom: 40px;
+    }
   }
 </style>
