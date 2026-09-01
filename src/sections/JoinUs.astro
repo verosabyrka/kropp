@@ -1,5 +1,7 @@
 ---
 import posterImage from '@/assets/images/join-us/video-placeholder.jpg'
+import Button from '@/components/Button.astro'
+import Field from '@/components/Field.astro'
 ---
 
 <section class="join-us">
@@ -30,25 +32,26 @@ import posterImage from '@/assets/images/join-us/video-placeholder.jpg'
         </div>
       </header>
       <div class="join-us-form-body">
-        <label class="visually-hidden" for="username">Name</label>
-        <input
-          class="join-us-form-input input"
+        <Field
+          class="join-us-form-input"
           id="username"
+          label="Name"
           placeholder="Name"
         />
-        <label class="visually-hidden" for="email">Email</label>
-        <input
-          class="join-us-form-input input"
+        <Field
+          class="join-us-form-input"
           id="email"
+          label="Email"
           placeholder="Email"
           type="email"
         />
-        <button
-          class="join-us-form-button button transparent"
+        <Button
+          class="join-us-form-button"
           type="submit"
+          isTransparent
         >
           Subscribe
-        </button>
+        </Button>
       </div>
     </form>
   </div>
