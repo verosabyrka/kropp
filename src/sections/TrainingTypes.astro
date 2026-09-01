@@ -1,0 +1,47 @@
+---
+import TrainingTypesItem from '@/components/TrainingTypesItem.astro'
+import trainingType1 from '@/assets/images/training-types/1.svg'
+import trainingType2 from '@/assets/images/training-types/2.svg'
+import trainingType3 from '@/assets/images/training-types/3.svg'
+import trainingType4 from '@/assets/images/training-types/4.svg'
+import trainingType5 from '@/assets/images/training-types/5.svg'
+import trainingType6 from '@/assets/images/training-types/6.svg'
+
+const trainingTypes = [
+  {
+    title: 'Maxpump',
+    image: trainingType1,
+  },
+  {
+    title: 'aron gym',
+    image: trainingType2,
+  },
+  {
+    title: 'fit & tone',
+    image: trainingType3,
+  },
+  {
+    title: 'forza',
+    image: trainingType4,
+  },
+  {
+    title: 'balance fitness',
+    image: trainingType5,
+  },
+  {
+    title: 'body sculpt',
+    image: trainingType6,
+  },
+]
+---
+
+<section class="training-types">
+  <h2 class="visually-hidden">Types of training</h2>
+  <ul class="training-types-list container-wide">
+    {
+      trainingTypes.map((item) => (
+        <TrainingTypesItem {...item} />
+      ))
+    }
+  </ul>
+</section>
