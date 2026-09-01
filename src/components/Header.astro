@@ -5,22 +5,22 @@ import Button from '@/components/Button.astro'
 
 <header class="header">
   <Logo class="header-logo" width={135} height={25} />
-  <nav class="header-menu">
+  <nav class="header-menu" data-js-header-menu>
     <ul class="header-menu-list">
       <li class="header-menu-item">
-        <a class="header-menu-link is-current" href="/">Home</a>
+        <a class="header-menu-link is-current" href="/" data-js-header-menu-link>Home</a>
       </li>
       <li class="header-menu-item">
-        <a class="header-menu-link" href="/">Pages</a>
+        <a class="header-menu-link" href="/" data-js-header-menu-link>Pages</a>
       </li>
       <li class="header-menu-item">
-        <a class="header-menu-link" href="/">Portfolio</a>
+        <a class="header-menu-link" href="/" data-js-header-menu-link>Portfolio</a>
       </li>
       <li class="header-menu-item">
-        <a class="header-menu-link" href="/">Blog</a>
+        <a class="header-menu-link" href="/" data-js-header-menu-link>Blog</a>
       </li>
       <li class="header-menu-item">
-        <a class="header-menu-link" href="/">Shop</a>
+        <a class="header-menu-link" href="/" data-js-header-menu-link>Shop</a>
       </li>
     </ul>
   </nav>
@@ -32,6 +32,9 @@ import Button from '@/components/Button.astro'
       class="header-burger-button"
       type="button"
       title="Open menu"
+      aria-label="Open menu"
+      aria-expanded="false"
+      data-js-header-burger-button
     >
       <span class="visually-hidden">Open menu</span>
       <span class="header-burger-button-line"></span>
@@ -42,6 +45,16 @@ import Button from '@/components/Button.astro'
 </header>
 
 <style>
+  @keyframes headerMenuFadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -66,11 +79,11 @@ import Button from '@/components/Button.astro'
     align-items: center;
     column-gap: 7px;
     height: 90px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 700;
     font-size: 12px;
+    font-weight: 700;
     letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
 
     &.is-current::after {
       content: '';
@@ -83,11 +96,14 @@ import Button from '@/components/Button.astro'
 
   .header-actions {
     display: flex;
+    align-items: center;
     column-gap: 40px;
   }
 
   .header-burger-button {
-    display: inline-flex;
+    display: none;
+    position: relative;
+    z-index: 101;
     flex-direction: column;
     justify-content: center;
     row-gap: 4px;
@@ -98,6 +114,7 @@ import Button from '@/components/Button.astro'
     background-color: transparent;
     border: var(--border);
     border-radius: 50%;
+    transition-duration: var(--transition-duration);
 
     &:hover {
       color: var(--color-light-gray);
@@ -107,6 +124,28 @@ import Button from '@/components/Button.astro'
     &:active {
       scale: 0.97;
     }
+
+    &.is-active {
+      .header-burger-button-line {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 16px;
+        box-shadow: none;
+
+        &:nth-child(2) {
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &:nth-child(3) {
+          opacity: 0;
+        }
+
+        &:nth-child(4) {
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+      }
+    }
   }
 
   .header-burger-button-line {
@@ -114,23 +153,47 @@ import Button from '@/components/Button.astro'
     height: 1px;
     background-color: currentColor;
     box-shadow: 16px 0 currentColor;
+    transition-duration: var(--transition-duration);
   }
 
   @media (max-width: 1024px) {
     .header {
-      flex-wrap: wrap;
-      row-gap: 10px;
       padding-top: 20px;
       padding-inline: var(--container-padding-x);
     }
 
+    .header-burger-button {
+      display: inline-flex;
+    }
+
     .header-menu {
-      order: 1;
-      flex-basis: 100%;
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 80px 20px 40px;
+      background-color: rgb(0 0 0 / 0.95);
+      backdrop-filter: blur(8px);
+
+      &.is-open {
+        display: flex;
+        animation: headerMenuFadeIn var(--transition-duration) ease-out forwards;
+      }
+    }
+
+    .header-menu-list {
+      flex-direction: column;
+      align-items: center;
+      row-gap: 24px;
+      column-gap: 0;
     }
 
     .header-menu-link {
-      height: 50px;
+      height: auto;
+      font-size: 18px;
+      letter-spacing: 2px;
     }
   }
 
@@ -139,18 +202,101 @@ import Button from '@/components/Button.astro'
       padding-top: 10px;
     }
 
-    .header-menu-link {
-      height: 32px;
-    }
-
     .header-actions {
       column-gap: 15px;
     }
   }
+</style>
 
-  @media (max-width: 480px) {
-    .header-menu-list {
-      column-gap: 22px;
+<script>
+  class HeaderMenu {
+    selectors = {
+      burgerButton: '[data-js-header-burger-button]',
+      menu: '[data-js-header-menu]',
+      menuLinks: '[data-js-header-menu-link]',
+    }
+
+    stateClasses = {
+      isOpen: 'is-open',
+      isActive: 'is-active',
+      isLock: 'is-lock',
+    }
+
+    burgerButtonElement: HTMLButtonElement | null
+    menuElement: HTMLElement | null
+    menuLinkElements: NodeListOf<HTMLAnchorElement>
+
+    constructor() {
+      this.burgerButtonElement = document.querySelector(this.selectors.burgerButton)
+      this.menuElement = document.querySelector(this.selectors.menu)
+      this.menuLinkElements = document.querySelectorAll(this.selectors.menuLinks)
+
+      this.bindEvents()
+    }
+
+    toggleMenu = () => {
+      if (!this.menuElement) return
+
+      const isOpen = this.menuElement.classList.contains(this.stateClasses.isOpen)
+      if (isOpen) {
+        this.closeMenu()
+      } else {
+        this.openMenu()
+      }
+    }
+
+    openMenu = () => {
+      if (!this.menuElement || !this.burgerButtonElement) return
+
+      this.menuElement.classList.add(this.stateClasses.isOpen)
+      this.burgerButtonElement.classList.add(this.stateClasses.isActive)
+      this.burgerButtonElement.setAttribute('aria-expanded', 'true')
+      this.burgerButtonElement.setAttribute('aria-label', 'Close menu')
+      this.burgerButtonElement.setAttribute('title', 'Close menu')
+      document.body.classList.add(this.stateClasses.isLock)
+    }
+
+    closeMenu = () => {
+      if (!this.menuElement || !this.burgerButtonElement) return
+
+      this.menuElement.classList.remove(this.stateClasses.isOpen)
+      this.burgerButtonElement.classList.remove(this.stateClasses.isActive)
+      this.burgerButtonElement.setAttribute('aria-expanded', 'false')
+      this.burgerButtonElement.setAttribute('aria-label', 'Open menu')
+      this.burgerButtonElement.setAttribute('title', 'Open menu')
+      document.body.classList.remove(this.stateClasses.isLock)
+    }
+
+    onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        this.closeMenu()
+      }
+    }
+
+    onResize = () => {
+      if (window.innerWidth > 1024) {
+        this.closeMenu()
+      }
+    }
+
+    onMenuClick = (e: MouseEvent) => {
+      if (e.target === this.menuElement) {
+        this.closeMenu()
+      }
+    }
+
+    bindEvents() {
+      this.burgerButtonElement?.addEventListener('click', this.toggleMenu)
+      this.menuElement?.addEventListener('click', this.onMenuClick)
+
+      this.menuLinkElements.forEach((link) => {
+        link.addEventListener('click', () => this.closeMenu())
+      })
+
+      document.addEventListener('keydown', this.onKeyDown)
+      window.addEventListener('resize', this.onResize)
     }
   }
-</style>
+
+  new HeaderMenu()
+</script>
