@@ -25,15 +25,3 @@
 
   --header-height: 90px;
 }
-
-@media (max-width: 767px) {
-  :root {
-    --header-height: 120px;
-  }
-}
-
-@media (max-width: 480px) {
-  :root {
-    --header-height: 92px;
-  }
-}
