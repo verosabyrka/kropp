@@ -18,39 +18,83 @@ const {
   id,
   label,
   class: className,
-  placeholder,
-  options,
+  placeholder = 'Select an option',
+  options = [],
+  required,
+  value: selectedValue = '',
+  name,
   ...rest
 } = Astro.props
+
+const initialSelectedOption = options.find((opt) => opt.value === selectedValue)
+const initialText = initialSelectedOption ? initialSelectedOption.title : placeholder
+const isInitialPlaceholder = !initialSelectedOption
 ---
 
-<label
-  class="visually-hidden"
-  for={id}
->
-  {label}
-</label>
-<select
-  class:list={[
-    'input',
-    className,
-  ]}
-  id={id}
-  aria-label={label}
-  {...rest}
->
-  {placeholder && (
-    <option value="" disabled selected>
-      {placeholder}
-    </option>
-  )}
-  {
-    options ? (
-      options.map(({ value, title }) => (
-        <option value={value}>{title}</option>
-      ))
-    ) : (
-      <slot />
-    )
-  }
-</select>
+<div class:list={['select', className]} data-js-select>
+  <label class="visually-hidden" for={id}>
+    {label}
+  </label>
+
+  <select
+    class="visually-hidden"
+    id={id}
+    name={name}
+    required={required}
+    tabindex="-1"
+    aria-hidden="true"
+    data-js-select-native
+    {...rest}
+  >
+    {placeholder && (
+      <option value="" disabled selected={isInitialPlaceholder}>
+        {placeholder}
+      </option>
+    )}
+    {options.map(({ value, title }) => (
+      <option value={value} selected={value === selectedValue}>
+        {title}
+      </option>
+    ))}
+  </select>
+
+  <button
+    type="button"
+    class:list={['select-button', 'input', { 'is-placeholder': isInitialPlaceholder }]}
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-labelledby={id}
+    data-js-select-button
+  >
+    <span class="select-button-text" data-js-select-text>
+      {initialText}
+    </span>
+    <span class="select-button-icon" aria-hidden="true">
+      <svg viewBox="0 0 10 6" width="10" height="6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </button>
+
+  <div class="select-dropdown" data-js-select-dropdown>
+    <ul class="select-list" role="listbox" aria-label={label} data-js-select-list>
+      {options.map(({ value, title }) => (
+        <li
+          class:list={['select-option', { 'is-selected': value === selectedValue }]}
+          role="option"
+          aria-selected={value === selectedValue ? 'true' : 'false'}
+          data-value={value}
+          data-js-select-option
+          tabindex="-1"
+        >
+          <span class="select-option-text">{title}</span>
+          <span class="select-option-check" aria-hidden="true">
+            <svg viewBox="0 0 12 10" width="12" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
