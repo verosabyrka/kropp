@@ -5,6 +5,10 @@ body {
   line-height: 1.75;
   color: var(--color-light-gray);
   background-color: var(--color-dark-alt);
+
+  &.is-lock {
+    overflow: hidden;
+  }
 }
 
 a,
