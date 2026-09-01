@@ -1,0 +1,121 @@
+---
+import Logo from '@/components/Logo.astro'
+import SocialSprite from '@/components/SocialSprite.astro'
+import Field from '@/components/Field.astro'
+
+const socialLinks = [
+  { title: 'TikTok', href: '/', icon: 'icon-tiktok' },
+  { title: 'YouTube', href: '/', icon: 'icon-youtube' },
+  { title: 'Instagram', href: '/', icon: 'icon-instagram' },
+  { title: 'Facebook', href: '/', icon: 'icon-facebook' },
+  { title: 'Twitter', href: '/', icon: 'icon-twitter' },
+]
+---
+
+<footer class="footer">
+  <SocialSprite />
+  <div class="footer-main">
+    <div class="footer-main-inner container">
+      <header class="footer-header">
+        <Logo
+          class="footer-logo"
+          imageClass="footer-logo-image"
+          width="270"
+          height="50"
+          loading="lazy"
+        />
+        <p class="footer-description section-description">
+          please feel free to send us an e-mail at
+          <a href="mailto:kropp@qodeinteractive.com">kropp@qodeinteractive.com</a>
+          For any additional inquiries
+        </p>
+      </header>
+      <div class="footer-body">
+        <div class="footer-column">
+          <h2 class="footer-column-title">About</h2>
+          <p class="footer-about">
+            Shape up your site with Kropp, a theme especially made for fitness & gym websites.
+          </p>
+        </div>
+        <div class="footer-column">
+          <h2 class="footer-column-title">Working hours</h2>
+          <div class="footer-schedule">
+            Monday - Friday<br />
+            <time datetime="05:30/24:00">05:30 - 24:00</time>
+          </div>
+          <div class="footer-schedule">
+            Weekdays<br />
+            <time datetime="00:00/24:00">00:00 - 24:00</time>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h2 class="footer-column-title">Location</h2>
+          <address class="footer-address">
+            68 Jay Street, Brooklyn,<br />
+            NY 11201, United States
+          </address>
+          <div class="footer-contacts">
+            <ul class="footer-contacts-list">
+              <li class="footer-contacts-item">
+                <a
+                  class="footer-contacts-link" href="mailto:kropp@qodeinteractive.com"
+                >kropp@qodeinteractive.com
+                </a>
+              </li>
+              <li class="footer-contacts-item">
+                <a class="footer-contacts-link" href="tel:+17184076400">+ (1) 718 - 407 - 6400</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h2 class="footer-column-title has-arrow">start now</h2>
+          <form class="footer-subscribe">
+            <Field
+              class="footer-subscribe-input"
+              id="subscribe-email"
+              label="Email"
+              placeholder="Email"
+              type="email"
+            />
+            <button
+              class="footer-subscribe-button"
+              type="submit"
+              title="Subscribe"
+            >
+              <span class="visually-hidden">Subscribe</span>
+            </button>
+          </form>
+          <div class="footer-soc1als">
+            <ul class="footer-soc1als-list">
+              {socialLinks.map(({ title, href, icon }) => (
+                <li class="footer-soc1als-item">
+                  <a
+                    class="footer-soc1als-link" href={href} target="_blank" title={title}
+                    aria-label={title}
+                  >
+                    <svg aria-hidden="true">
+                      <use href={`#${icon}`} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-extra">
+    <div class="footer-extra-inner container">
+      <div class="footer-copyright">
+        ©&nbsp;
+        <time datetime="2022">2022</time>&nbsp;
+        Qode Interactive, All Rights Reserved |&nbsp;
+        <a href="/">Privacy Policy</a>
+        &nbsp;|&nbsp;
+        <a href="/">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</footer>
