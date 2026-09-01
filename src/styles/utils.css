@@ -60,3 +60,9 @@
   border: 0 !important;
   clip-path: inset(50%) !important;
 }
+
+@media (max-width: 767px) {
+  .section-description {
+    font-size: 16px;
+  }
+}
