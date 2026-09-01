@@ -37,3 +37,15 @@ const motivations = [
     }
   </ul>
 </section>
+
+<style>
+  .motivation-item {
+    &:nth-child(odd) {
+      background-color: var(--color-dark);
+    }
+
+    &:nth-child(even) :global(.motivation-card) {
+      flex-direction: row-reverse;
+    }
+  }
+</style>
