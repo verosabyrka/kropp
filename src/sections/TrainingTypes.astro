@@ -59,4 +59,17 @@ const trainingTypes = [
     grid-template-columns: repeat(6, 1fr);
     gap: 60px;
   }
+
+  @media (max-width: 1280px) {
+    .training-types-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .training-types-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+  }
 </style>
