@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { Image } from 'astro:assets'
+import logo from '@/assets/images/logo.png'
+
+interface Props extends HTMLAttributes<'a'> {
+  width?: number | `${number}`
+  height?: number | `${number}`
+  loading?: 'lazy' | 'eager'
+  imageClass?: string
+}
+
+const {
+  href = '/',
+  class: className,
+  width = 135,
+  height = 25,
+  loading = 'eager',
+  imageClass,
+  ...rest
+} = Astro.props
+---
+
+<a href={href} class={className} {...rest}>
+  <Image
+    class={imageClass}
+    src={logo}
+    alt="Kropp Logo"
+    width={Number(width)}
+    height={Number(height)}
+    loading={loading}
+  />
+</a>
