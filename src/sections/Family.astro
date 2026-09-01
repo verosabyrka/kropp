@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets'
+import familyImage1 from '@/assets/images/family/1.jpg'
+import familyImage2 from '@/assets/images/family/2.jpg'
+import familyImage3 from '@/assets/images/family/3.jpg'
+import familyImage4 from '@/assets/images/family/4.jpg'
+import familyImage5 from '@/assets/images/family/5.jpg'
+
+const familyImages = [
+  {
+    src: familyImage1,
+    width: 414,
+  },
+  {
+    src: familyImage2,
+    width: 744,
+  },
+  {
+    src: familyImage3,
+    width: 396,
+  },
+  {
+    src: familyImage4,
+    width: 396,
+  },
+  {
+    src: familyImage5,
+    width: 414,
+  },
+]
+---
+
+<section class="family">
+  <header class="family-header container">
+    <h2
+      class="family-title title-big backdrop-title centered"
+      data-title="Part"
+    >
+      Be a part of our fit family
+    </h2>
+    <div class="family-description section-description">
+      <p>Training helps you think and feel better. join us!</p>
+    </div>
+  </header>
+  <div class="family-body container-wide">
+    {
+      familyImages.map((image) => (
+        <Image
+          class="family-image"
+          src={image.src}
+          alt="Training people"
+          width={image.width}
+          height={479}
+          loading="lazy"
+        />
+      ))
+    }
+  </div>
+</section>
