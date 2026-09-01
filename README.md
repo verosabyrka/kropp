@@ -93,8 +93,3 @@ kropp/
 ├── package.json            # Project dependencies and scripts
 └── tsconfig.json           # TypeScript configuration
 ```
-
-## 👤 Author
-
-Developed by **Sabyrka**
-- GitHub: [@verosabyrka](https://github.com/verosabyrka)
