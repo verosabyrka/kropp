@@ -7,6 +7,22 @@ body {
   background-color: var(--color-dark-alt);
 }
 
+a,
+button,
+input,
+textarea,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  color: var(--color-light);
+
+  &:hover {
+    color: var(--color-light-gray);
+  }
+}
+
 h1, h2, h3 {
   font-weight: 700;
   text-transform: uppercase;
