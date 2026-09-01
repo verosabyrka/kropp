@@ -2,6 +2,22 @@
 import '@/styles/main.css'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const {
+  title = 'Kropp Fitness Club | Unleash Your Potential',
+  description = 'A modern, high-performance fitness and crossfit club landing page built with Astro and modern CSS.',
+  image = '/favicon/favicon-96x96.png',
+} = Astro.props
+
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : Astro.url
 ---
 
 <!doctype html>
@@ -9,13 +25,30 @@ import Footer from '@/components/Footer.astro'
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Kropp" />
     <link rel="manifest" href="/favicon/site.webmanifest" />
-    <title>Kropp Fitness Club | Unleash Your Potent</title>
+    <title>{title}</title>
   </head>
   <body>
     <Header />
