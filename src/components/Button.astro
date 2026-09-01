@@ -28,3 +28,27 @@ const {
 >
   <slot />
 </button>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding-inline: 26px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 2;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: var(--color-light);
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    &:hover {
+      color: var(--color-light);
+      background-color: transparent;
+    }
+  }
+</style>
