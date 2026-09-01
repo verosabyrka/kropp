@@ -4,6 +4,10 @@
   padding-inline: var(--container-padding-x);
 }
 
+.title-big {
+  font-size: clamp(24px, 3.12vw, 60px);
+}
+
 .title-medium {
   font-size: clamp(20px, 2.08vw, 40px);
   line-height: 1.3;
