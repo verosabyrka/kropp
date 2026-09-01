@@ -71,4 +71,38 @@ const {
   .motivation-card-description:not(:last-child) {
     margin-bottom: 37px;
   }
+
+  @media (max-width: 1919px) {
+    .motivation-card-image {
+      margin-block: -20px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .motivation-card {
+      padding-block: 50px;
+    }
+
+    .motivation-card-image {
+      max-width: 40%;
+      height: auto;
+      margin-block: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .motivation-card {
+      flex-direction: column-reverse;
+      row-gap: 40px;
+      padding-block: 30px;
+    }
+
+    .motivation-card-image {
+      max-width: 80%;
+    }
+
+    .motivation-card-description:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
 </style>
