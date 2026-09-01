@@ -1,3 +1,32 @@
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dark-gray) var(--color-dark-alt);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-dark-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-dark-gray);
+  border: 2px solid var(--color-dark-alt);
+  border-radius: var(--border-radius-sm);
+  transition-duration: var(--transition-duration);
+
+  &:hover {
+    background-color: var(--color-dark-gray-alt);
+  }
+
+  &:active {
+    background-color: var(--color-light-gray);
+  }
+}
+
 body {
   font-family: var(--font-family-base);
   font-weight: 300;
