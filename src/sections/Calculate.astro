@@ -201,160 +201,6 @@ const activityFactorOptions = [
   </dialog>
 </section>
 
-<script>
-  import { calculateFitnessMetrics } from '@/utils/calculator'
-
-  class BMICalculator {
-    selectors = {
-      form: '[data-js-calculate-form]',
-      modal: '[data-js-calculate-modal]',
-      closeButton: '[data-js-calculate-modal-close]',
-      okButton: '[data-js-calculate-modal-ok]',
-      resultBmi: '[data-js-calculate-result-bmi]',
-      resultBmiStatus: '[data-js-calculate-result-status]',
-      resultBmr: '[data-js-calculate-result-bmr]',
-      resultMaintain: '[data-js-calculate-result-maintain]',
-      resultLoss: '[data-js-calculate-result-loss]',
-      resultGain: '[data-js-calculate-result-gain]',
-    }
-
-    stateClasses = {
-      isLock: 'is-lock',
-      isClosing: 'is-closing',
-      healthy: 'status-healthy',
-      underweight: 'status-underweight',
-      overweight: 'status-overweight',
-      obese: 'status-obese',
-    }
-
-    form: HTMLFormElement | null
-    modal: HTMLDialogElement | null
-    closeButton: HTMLButtonElement | null
-    okButton: HTMLButtonElement | null
-    resultBmi: HTMLElement | null
-    resultBmiStatus: HTMLElement | null
-    resultBmr: HTMLElement | null
-    resultMaintain: HTMLElement | null
-    resultLoss: HTMLElement | null
-    resultGain: HTMLElement | null
-
-    constructor() {
-      this.form = document.querySelector(this.selectors.form)
-      this.modal = document.querySelector(this.selectors.modal)
-      this.closeButton = document.querySelector(this.selectors.closeButton)
-      this.okButton = document.querySelector(this.selectors.okButton)
-
-      this.resultBmi = document.querySelector(this.selectors.resultBmi)
-      this.resultBmiStatus = document.querySelector(this.selectors.resultBmiStatus)
-      this.resultBmr = document.querySelector(this.selectors.resultBmr)
-      this.resultMaintain = document.querySelector(this.selectors.resultMaintain)
-      this.resultLoss = document.querySelector(this.selectors.resultLoss)
-      this.resultGain = document.querySelector(this.selectors.resultGain)
-
-      this.bindEvents()
-    }
-
-    updateResults() {
-      if (!this.form) return false
-
-      const formData = new FormData(this.form)
-      const res = calculateFitnessMetrics({
-        height: parseFloat(formData.get('height') as string),
-        weight: parseFloat(formData.get('weight') as string),
-        age: parseFloat(formData.get('age') as string),
-        gender: formData.get('gender') as string,
-        activityFactor: parseFloat(formData.get('activityFactor') as string),
-      })
-
-      if (!res) return false
-
-      if (this.resultBmi) this.resultBmi.textContent = res.bmi.toString()
-      if (this.resultBmr) this.resultBmr.textContent = res.bmr.toLocaleString()
-      if (this.resultMaintain) this.resultMaintain.textContent = res.tdeeMaintain.toLocaleString()
-      if (this.resultLoss) this.resultLoss.textContent = res.tdeeLoss.toLocaleString()
-      if (this.resultGain) this.resultGain.textContent = res.tdeeGain.toLocaleString()
-
-      if (this.resultBmiStatus) {
-        const modifier = this.stateClasses[res.category.key]
-        this.resultBmiStatus.textContent = res.category.label
-        this.resultBmiStatus.className = `calculate-result-badge ${modifier}`
-      }
-
-      return true
-    }
-
-    openModal() {
-      if (!this.modal) return
-      this.modal.classList.remove(this.stateClasses.isClosing)
-      this.modal.showModal()
-      document.body.classList.add(this.stateClasses.isLock)
-    }
-
-    closeModal() {
-      if (
-        !this.modal ||
-        !this.modal.open ||
-        this.modal.classList.contains(this.stateClasses.isClosing)
-      ) {
-        return
-      }
-
-      this.modal.classList.add(this.stateClasses.isClosing)
-
-      const onAnimationEnd = () => {
-        if (!this.modal) return
-        this.modal.classList.remove(this.stateClasses.isClosing)
-        this.modal.close()
-        document.body.classList.remove(this.stateClasses.isLock)
-      }
-
-      this.modal.addEventListener('animationend', onAnimationEnd, { once: true })
-    }
-
-    onFormInput = () => {
-      this.updateResults()
-    }
-
-    onFormSubmit = (e: SubmitEvent) => {
-      e.preventDefault()
-      const isSuccess = this.updateResults()
-      if (isSuccess) {
-        this.openModal()
-      } else {
-        this.form?.reportValidity()
-      }
-    }
-
-    onModalClick = (e: MouseEvent) => {
-      if (e.target === this.modal) {
-        this.closeModal()
-      }
-    }
-
-    onModalCancel = (e: Event) => {
-      e.preventDefault()
-      this.closeModal()
-    }
-
-    onModalClose = () => {
-      this.modal?.classList.remove(this.stateClasses.isClosing)
-      document.body.classList.remove(this.stateClasses.isLock)
-    }
-
-    bindEvents() {
-      this.form?.addEventListener('input', this.onFormInput)
-      this.form?.addEventListener('submit', this.onFormSubmit)
-      this.closeButton?.addEventListener('click', () => this.closeModal())
-      this.okButton?.addEventListener('click', () => this.closeModal())
-      this.modal?.addEventListener('click', this.onModalClick)
-      this.modal?.addEventListener('cancel', this.onModalCancel)
-      this.modal?.addEventListener('close', this.onModalClose)
-    }
-  }
-
-  new BMICalculator()
-</script>
-
 <style>
   @keyframes modalFadeIn {
     from {
@@ -832,3 +678,157 @@ const activityFactorOptions = [
     }
   }
 </style>
+
+<script>
+  import { calculateFitnessMetrics } from '@/utils/calculator'
+
+  class BMICalculator {
+    selectors = {
+      form: '[data-js-calculate-form]',
+      modal: '[data-js-calculate-modal]',
+      closeButton: '[data-js-calculate-modal-close]',
+      okButton: '[data-js-calculate-modal-ok]',
+      resultBmi: '[data-js-calculate-result-bmi]',
+      resultBmiStatus: '[data-js-calculate-result-status]',
+      resultBmr: '[data-js-calculate-result-bmr]',
+      resultMaintain: '[data-js-calculate-result-maintain]',
+      resultLoss: '[data-js-calculate-result-loss]',
+      resultGain: '[data-js-calculate-result-gain]',
+    }
+
+    stateClasses = {
+      isLock: 'is-lock',
+      isClosing: 'is-closing',
+      healthy: 'status-healthy',
+      underweight: 'status-underweight',
+      overweight: 'status-overweight',
+      obese: 'status-obese',
+    }
+
+    form: HTMLFormElement | null
+    modal: HTMLDialogElement | null
+    closeButton: HTMLButtonElement | null
+    okButton: HTMLButtonElement | null
+    resultBmi: HTMLElement | null
+    resultBmiStatus: HTMLElement | null
+    resultBmr: HTMLElement | null
+    resultMaintain: HTMLElement | null
+    resultLoss: HTMLElement | null
+    resultGain: HTMLElement | null
+
+    constructor() {
+      this.form = document.querySelector(this.selectors.form)
+      this.modal = document.querySelector(this.selectors.modal)
+      this.closeButton = document.querySelector(this.selectors.closeButton)
+      this.okButton = document.querySelector(this.selectors.okButton)
+
+      this.resultBmi = document.querySelector(this.selectors.resultBmi)
+      this.resultBmiStatus = document.querySelector(this.selectors.resultBmiStatus)
+      this.resultBmr = document.querySelector(this.selectors.resultBmr)
+      this.resultMaintain = document.querySelector(this.selectors.resultMaintain)
+      this.resultLoss = document.querySelector(this.selectors.resultLoss)
+      this.resultGain = document.querySelector(this.selectors.resultGain)
+
+      this.bindEvents()
+    }
+
+    updateResults() {
+      if (!this.form) return false
+
+      const formData = new FormData(this.form)
+      const res = calculateFitnessMetrics({
+        height: parseFloat(formData.get('height') as string),
+        weight: parseFloat(formData.get('weight') as string),
+        age: parseFloat(formData.get('age') as string),
+        gender: formData.get('gender') as string,
+        activityFactor: parseFloat(formData.get('activityFactor') as string),
+      })
+
+      if (!res) return false
+
+      if (this.resultBmi) this.resultBmi.textContent = res.bmi.toString()
+      if (this.resultBmr) this.resultBmr.textContent = res.bmr.toLocaleString()
+      if (this.resultMaintain) this.resultMaintain.textContent = res.tdeeMaintain.toLocaleString()
+      if (this.resultLoss) this.resultLoss.textContent = res.tdeeLoss.toLocaleString()
+      if (this.resultGain) this.resultGain.textContent = res.tdeeGain.toLocaleString()
+
+      if (this.resultBmiStatus) {
+        const modifier = this.stateClasses[res.category.key]
+        this.resultBmiStatus.textContent = res.category.label
+        this.resultBmiStatus.className = `calculate-result-badge ${modifier}`
+      }
+
+      return true
+    }
+
+    openModal() {
+      if (!this.modal) return
+      this.modal.classList.remove(this.stateClasses.isClosing)
+      this.modal.showModal()
+      document.body.classList.add(this.stateClasses.isLock)
+    }
+
+    closeModal() {
+      if (
+        !this.modal ||
+        !this.modal.open ||
+        this.modal.classList.contains(this.stateClasses.isClosing)
+      ) {
+        return
+      }
+
+      this.modal.classList.add(this.stateClasses.isClosing)
+
+      const onAnimationEnd = () => {
+        if (!this.modal) return
+        this.modal.classList.remove(this.stateClasses.isClosing)
+        this.modal.close()
+        document.body.classList.remove(this.stateClasses.isLock)
+      }
+
+      this.modal.addEventListener('animationend', onAnimationEnd, { once: true })
+    }
+
+    onFormInput = () => {
+      this.updateResults()
+    }
+
+    onFormSubmit = (e: SubmitEvent) => {
+      e.preventDefault()
+      const isSuccess = this.updateResults()
+      if (isSuccess) {
+        this.openModal()
+      } else {
+        this.form?.reportValidity()
+      }
+    }
+
+    onModalClick = (e: MouseEvent) => {
+      if (e.target === this.modal) {
+        this.closeModal()
+      }
+    }
+
+    onModalCancel = (e: Event) => {
+      e.preventDefault()
+      this.closeModal()
+    }
+
+    onModalClose = () => {
+      this.modal?.classList.remove(this.stateClasses.isClosing)
+      document.body.classList.remove(this.stateClasses.isLock)
+    }
+
+    bindEvents() {
+      this.form?.addEventListener('input', this.onFormInput)
+      this.form?.addEventListener('submit', this.onFormSubmit)
+      this.closeButton?.addEventListener('click', () => this.closeModal())
+      this.okButton?.addEventListener('click', () => this.closeModal())
+      this.modal?.addEventListener('click', this.onModalClick)
+      this.modal?.addEventListener('cancel', this.onModalCancel)
+      this.modal?.addEventListener('close', this.onModalClose)
+    }
+  }
+
+  new BMICalculator()
+</script>
