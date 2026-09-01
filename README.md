@@ -1,5 +1,10 @@
 # Kropp — Fitness Club Landing Page
 
+![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat&logo=astro&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-F69220?style=flat&logo=pnpm&logoColor=white)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/754c3f54-4e73-46ee-aaff-fa0e63258241/deploy-status)](https://app.netlify.com/projects/sz-kropp/deploys)
 
 A modern, high-performance landing page for the **Kropp** fitness and crossfit club, built with [Astro](https://astro.build) and optimized for accessibility, responsiveness, and speed.
