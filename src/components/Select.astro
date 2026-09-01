@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Option {
+  value: string
+  title: string
+}
+
+interface Props extends HTMLAttributes<'select'> {
+  id: string
+  label: string
+  class?: string
+  placeholder?: string
+  options?: Option[]
+}
+
+const {
+  id,
+  label,
+  class: className,
+  placeholder,
+  options,
+  ...rest
+} = Astro.props
+---
+
+<label
+  class="visually-hidden"
+  for={id}
+>
+  {label}
+</label>
+<select
+  class:list={[
+    'input',
+    className,
+  ]}
+  id={id}
+  {...rest}
+>
+  {placeholder && (
+    <option value="" disabled selected>
+      {placeholder}
+    </option>
+  )}
+  {
+    options ? (
+      options.map(({ value, title }) => (
+        <option value={value}>{title}</option>
+      ))
+    ) : (
+      <slot />
+    )
+  }
+</select>
