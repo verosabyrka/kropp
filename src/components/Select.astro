@@ -269,3 +269,157 @@ const isInitialPlaceholder = !initialSelectedOption
     }
   }
 </style>
+
+<script>
+  class CustomSelect {
+    selectors = {
+      root: '[data-js-select]',
+      button: '[data-js-select-button]',
+      text: '[data-js-select-text]',
+      nativeSelect: '[data-js-select-native]',
+      dropdown: '[data-js-select-dropdown]',
+      option: '[data-js-select-option]',
+    }
+
+    stateClasses = {
+      isOpen: 'is-open',
+      isSelected: 'is-selected',
+      isPlaceholder: 'is-placeholder',
+    }
+
+    rootElement: HTMLElement
+    buttonElement: HTMLButtonElement | null
+    textElement: HTMLElement | null
+    nativeSelectElement: HTMLSelectElement | null
+    dropdownElement: HTMLElement | null
+    optionElements: NodeListOf<HTMLElement>
+
+    constructor(rootElement: HTMLElement) {
+      this.rootElement = rootElement
+      this.buttonElement = this.rootElement.querySelector(this.selectors.button)
+      this.textElement = this.rootElement.querySelector(this.selectors.text)
+      this.nativeSelectElement = this.rootElement.querySelector(this.selectors.nativeSelect)
+      this.dropdownElement = this.rootElement.querySelector(this.selectors.dropdown)
+      this.optionElements = this.rootElement.querySelectorAll(this.selectors.option)
+
+      this.bindEvents()
+    }
+
+    open() {
+      document.querySelectorAll<HTMLElement>(this.selectors.root).forEach((select) => {
+        if (select !== this.rootElement) {
+          select.classList.remove(this.stateClasses.isOpen)
+          const btn = select.querySelector<HTMLButtonElement>(this.selectors.button)
+          if (btn) btn.setAttribute('aria-expanded', 'false')
+        }
+      })
+
+      this.rootElement.classList.add(this.stateClasses.isOpen)
+      this.buttonElement?.setAttribute('aria-expanded', 'true')
+
+      const selectedOption = this.rootElement.querySelector<HTMLElement>(
+        `${this.selectors.option}.${this.stateClasses.isSelected}`
+      )
+      if (selectedOption) {
+        selectedOption.focus()
+      } else if (this.optionElements.length > 0) {
+        this.optionElements[0].focus()
+      }
+    }
+
+    close() {
+      this.rootElement.classList.remove(this.stateClasses.isOpen)
+      this.buttonElement?.setAttribute('aria-expanded', 'false')
+    }
+
+    toggle() {
+      if (this.rootElement.classList.contains(this.stateClasses.isOpen)) {
+        this.close()
+      } else {
+        this.open()
+      }
+    }
+
+    selectOption(optionElement: HTMLElement) {
+      const value = optionElement.dataset.value ?? ''
+      const title = optionElement.querySelector(this.selectors.text)?.textContent?.trim() ||
+        optionElement.querySelector('.select-option-text')?.textContent?.trim() ||
+        optionElement.textContent?.trim() ||
+        ''
+
+      if (this.nativeSelectElement) {
+        this.nativeSelectElement.value = value
+        this.nativeSelectElement.dispatchEvent(new Event('change', { bubbles: true }))
+        this.nativeSelectElement.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+
+      if (this.textElement) {
+        this.textElement.textContent = title
+      }
+
+      this.buttonElement?.classList.remove(this.stateClasses.isPlaceholder)
+
+      this.optionElements.forEach((opt) => {
+        const isMatch = opt === optionElement
+        opt.classList.toggle(this.stateClasses.isSelected, isMatch)
+        opt.setAttribute('aria-selected', isMatch ? 'true' : 'false')
+      })
+
+      this.close()
+      this.buttonElement?.focus()
+    }
+
+    onButtonClick = (e: MouseEvent) => {
+      e.preventDefault()
+      this.toggle()
+    }
+
+    onButtonKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        this.open()
+      }
+    }
+
+    onOptionKeyDown = (e: KeyboardEvent, index: number) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        const next = this.optionElements[index + 1] || this.optionElements[0]
+        next?.focus()
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        const prev = this.optionElements[index - 1] || this.optionElements[this.optionElements.length - 1]
+        prev?.focus()
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        const option = this.optionElements[index]
+        if (option) this.selectOption(option)
+      } else if (e.key === 'Escape' || e.key === 'Tab') {
+        this.close()
+        this.buttonElement?.focus()
+      }
+    }
+
+    onDocumentClick = (e: MouseEvent) => {
+      if (!this.rootElement.contains(e.target as Node)) {
+        this.close()
+      }
+    }
+
+    bindEvents() {
+      this.buttonElement?.addEventListener('click', this.onButtonClick)
+      this.buttonElement?.addEventListener('keydown', this.onButtonKeyDown)
+
+      this.optionElements.forEach((option, index) => {
+        option.addEventListener('click', () => this.selectOption(option))
+        option.addEventListener('keydown', (e) => this.onOptionKeyDown(e, index))
+      })
+
+      document.addEventListener('click', this.onDocumentClick)
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-js-select]').forEach((element) => {
+    new CustomSelect(element)
+  })
+</script>
