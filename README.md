@@ -4,17 +4,15 @@
 
 A modern, high-performance landing page for the **Kropp** fitness and crossfit club, built with [Astro](https://astro.build) and optimized for accessibility, responsiveness, and speed.
 
----
-
 ## ✨ Features
 
-- ⚡ **Blazing Fast Performance**: Zero JavaScript runtime by default, delivering top-tier Core Web Vitals.
-- 🎨 **Responsive & Pixel-Perfect Design**: Clean layout crafted with modern CSS features (CSS Nesting, CSS Variables, Fluid Typography).
-- 🧩 **Modular Component Architecture**: Reusable UI elements (`Button`, `Field`, `Select`, `Logo`, `SocialSprite`).
-- 🛡️ **Type Safety**: Strictly typed component props and attributes via TypeScript (`astro/types`).
-- 🖼️ **Optimized Media Assets**: High-resolution and responsive images powered by Astro’s built-in `astro:assets` and Sharp.
-- ♿ **Accessibility First**: Semantic HTML5 tags, keyboard navigation focus indicators (`:focus-visible`), and accessible form labels.
-- 📐 **Landing Sections**:
+- **Blazing Fast Performance**: Zero JavaScript runtime by default, delivering top-tier Core Web Vitals.
+- **Responsive & Pixel-Perfect Design**: Clean layout crafted with modern CSS features (CSS Nesting, CSS Variables, Fluid Typography).
+- **Modular Component Architecture**: Reusable UI elements (`Button`, `Field`, `Select`, `Logo`, `SocialSprite`).
+- **Type Safety**: Strictly typed component props and attributes via TypeScript (`astro/types`).
+- **Optimized Media Assets**: High-resolution and responsive images powered by Astro’s built-in `astro:assets` and Sharp.
+- **Accessibility First**: Semantic HTML5 tags, keyboard navigation focus indicators (`:focus-visible`), and accessible form labels.
+- **Landing Sections**:
   - Hero banner with quick call-to-actions
   - Motivation & values showcase
   - Training programs & activities
@@ -24,8 +22,6 @@ A modern, high-performance landing page for the **Kropp** fitness and crossfit c
   - Community photo gallery
   - Newsletter subscription & social media links
 
----
-
 ## 🛠️ Tech Stack
 
 - **Framework**: [Astro 7](https://astro.build)
@@ -34,8 +30,6 @@ A modern, high-performance landing page for the **Kropp** fitness and crossfit c
 - **Styling**: Native CSS with modern features (CSS Variables, Nesting, Flexbox/Grid)
 - **Package Manager**: [pnpm](https://pnpm.io/)
 - **Deployment**: [Netlify](https://www.netlify.com/)
-
----
 
 ## 🚀 Getting Started
 
@@ -64,8 +58,6 @@ Ensure you have [Node.js](https://nodejs.org/) installed:
    ```
    Open [http://localhost:4321](http://localhost:4321) in your browser to view the project.
 
----
-
 ## 🧞 Available Scripts
 
 | Command | Action |
@@ -74,8 +66,6 @@ Ensure you have [Node.js](https://nodejs.org/) installed:
 | `pnpm build` | Compiles the production build into `./dist/` |
 | `pnpm preview` | Locally previews the production build before deployment |
 | `pnpm astro` | Runs Astro CLI commands (`astro check`, `astro add`, etc.) |
-
----
 
 ## 📂 Project Structure
 
@@ -94,14 +84,10 @@ kropp/
 └── tsconfig.json           # TypeScript configuration
 ```
 
----
-
 ## 👤 Author
 
 Developed by **Sabyrka**
 - GitHub: [@verosabyrka](https://github.com/verosabyrka)
-
----
 
 ## 📄 License
 
