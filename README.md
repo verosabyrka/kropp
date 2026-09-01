@@ -1,48 +1,108 @@
-# Astro Starter Kit: Basics
+# Kropp — Fitness Club Landing Page
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/754c3f54-4e73-46ee-aaff-fa0e63258241/deploy-status)](https://app.netlify.com/projects/sz-kropp/deploys)
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+A modern, high-performance landing page for the **Kropp** fitness and crossfit club, built with [Astro](https://astro.build) and optimized for accessibility, responsiveness, and speed.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## ✨ Features
 
-Inside of your Astro project, you'll see the following folders and files:
+- ⚡ **Blazing Fast Performance**: Zero JavaScript runtime by default, delivering top-tier Core Web Vitals.
+- 🎨 **Responsive & Pixel-Perfect Design**: Clean layout crafted with modern CSS features (CSS Nesting, CSS Variables, Fluid Typography).
+- 🧩 **Modular Component Architecture**: Reusable UI elements (`Button`, `Field`, `Select`, `Logo`, `SocialSprite`).
+- 🛡️ **Type Safety**: Strictly typed component props and attributes via TypeScript (`astro/types`).
+- 🖼️ **Optimized Media Assets**: High-resolution and responsive images powered by Astro’s built-in `astro:assets` and Sharp.
+- ♿ **Accessibility First**: Semantic HTML5 tags, keyboard navigation focus indicators (`:focus-visible`), and accessible form labels.
+- 📐 **Landing Sections**:
+  - Hero banner with quick call-to-actions
+  - Motivation & values showcase
+  - Training programs & activities
+  - Video presentation preview
+  - BMI & calorie calculation form and metrics table
+  - Gym location details & working hours
+  - Community photo gallery
+  - Newsletter subscription & social media links
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro 7](https://astro.build)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict mode, typed component props)
+- **Image Optimization**: [Sharp](https://sharp.pixelplumbing.com/)
+- **Styling**: Native CSS with modern features (CSS Variables, Nesting, Flexbox/Grid)
+- **Package Manager**: [pnpm](https://pnpm.io/)
+- **Deployment**: [Netlify](https://www.netlify.com/)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Ensure you have [Node.js](https://nodejs.org/) installed:
+- **Node.js**: `>= 22.12.0`
+- **pnpm**: `>= 9.0.0` (or `npm` / `yarn`)
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/verosabyrka/kropp.git
+   cd kropp
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+
+3. **Start the development server**:
+   ```bash
+   pnpm dev
+   ```
+   Open [http://localhost:4321](http://localhost:4321) in your browser to view the project.
+
+---
+
+## 🧞 Available Scripts
+
+| Command | Action |
+| :--- | :--- |
+| `pnpm dev` | Starts local development server at `localhost:4321` |
+| `pnpm build` | Compiles the production build into `./dist/` |
+| `pnpm preview` | Locally previews the production build before deployment |
+| `pnpm astro` | Runs Astro CLI commands (`astro check`, `astro add`, etc.) |
+
+---
+
+## 📂 Project Structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+kropp/
+├── public/                 # Static assets (favicons, etc.)
+├── src/
+│   ├── assets/             # Media assets (images, icons, fonts)
+│   ├── components/         # Reusable UI components (Button, Field, Logo, etc.)
+│   ├── layouts/            # Page layouts (Layout.astro)
+│   ├── pages/              # Astro pages & routes (index.astro)
+│   ├── sections/           # Landing page section blocks (Banner, JoinUs, etc.)
+│   └── styles/             # Global styles, reset/normalize, variables
+├── astro.config.mjs        # Astro configuration
+├── package.json            # Project dependencies and scripts
+└── tsconfig.json           # TypeScript configuration
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+---
 
-## 🧞 Commands
+## 👤 Author
 
-All commands are run from the root of the project, from a terminal:
+Developed by **Sabyrka**
+- GitHub: [@verosabyrka](https://github.com/verosabyrka)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+## 📄 License
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This project is licensed under the MIT License — see the repository for details.
