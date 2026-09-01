@@ -5,14 +5,19 @@ import Field from '@/components/Field.astro'
 ---
 
 <section class="join-us">
-  <div class="join-us-video-wrapper">
+  <div class="join-us-video-wrapper" data-js-video-wrapper>
     <video
-      class="join-us-video" src="" width="960" height="600"
+      class="join-us-video"
+      src=""
+      width="960"
+      height="600"
       poster={posterImage.src}
+      data-js-video
     ></video>
     <button
       class="join-us-video-play-button"
       type="button"
+      data-js-video-play-button
     >
       Play
     </button>
@@ -91,6 +96,7 @@ import Field from '@/components/Field.astro'
     background-color: transparent;
     border: var(--border);
     border-radius: 50%;
+    will-change: transform;
 
     &::after {
       content: '';
@@ -191,3 +197,132 @@ import Field from '@/components/Field.astro'
     }
   }
 </style>
+
+<script>
+  class FloatingPlayButton {
+    selectors = {
+      wrapper: '[data-js-video-wrapper]',
+      video: '[data-js-video]',
+      button: '[data-js-video-play-button]',
+    }
+
+    wrapperElement: HTMLElement | null
+    videoElement: HTMLElement | null
+    buttonElement: HTMLElement | null
+
+    targetX = 0
+    targetY = 0
+    currentX = 0
+    currentY = 0
+    rafId: number | null = null
+    isHovered = false
+
+    constructor() {
+      this.wrapperElement = document.querySelector(this.selectors.wrapper)
+      this.videoElement = document.querySelector(this.selectors.video)
+      this.buttonElement = document.querySelector(this.selectors.button)
+
+      this.bindEvents()
+    }
+
+    onMouseMove = (e: MouseEvent) => {
+      if (!this.videoElement || !this.buttonElement) return
+
+      const videoRect = this.videoElement.getBoundingClientRect()
+      const isInside =
+        e.clientX >= videoRect.left &&
+        e.clientX <= videoRect.right &&
+        e.clientY >= videoRect.top &&
+        e.clientY <= videoRect.bottom
+
+      if (!isInside) {
+        if (this.isHovered) {
+          this.isHovered = false
+          this.targetX = 0
+          this.targetY = 0
+          this.startAnimation()
+        }
+        return
+      }
+
+      this.isHovered = true
+      const buttonRect = this.buttonElement.getBoundingClientRect()
+
+      const maxTravelX = Math.max(0, (videoRect.width - buttonRect.width) / 2)
+      const maxTravelY = Math.max(0, (videoRect.height - buttonRect.height) / 2)
+
+      const centerX = videoRect.left + videoRect.width / 2
+      const centerY = videoRect.top + videoRect.height / 2
+
+      const rawDeltaX = e.clientX - centerX
+      const rawDeltaY = e.clientY - centerY
+
+      this.targetX = Math.max(-maxTravelX, Math.min(maxTravelX, rawDeltaX))
+      this.targetY = Math.max(-maxTravelY, Math.min(maxTravelY, rawDeltaY))
+
+      this.startAnimation()
+    }
+
+    onMouseEnter = (e: MouseEvent) => {
+      this.onMouseMove(e)
+    }
+
+    onMouseLeave = () => {
+      this.isHovered = false
+      this.targetX = 0
+      this.targetY = 0
+      this.startAnimation()
+    }
+
+    animate = () => {
+      const ease = 0.16
+      this.currentX += (this.targetX - this.currentX) * ease
+      this.currentY += (this.targetY - this.currentY) * ease
+
+      if (this.buttonElement) {
+        this.buttonElement.style.transform = `translate3d(${this.currentX.toFixed(2)}px, ${this.currentY.toFixed(2)}px, 0)`
+      }
+
+      const deltaX = Math.abs(this.targetX - this.currentX)
+      const deltaY = Math.abs(this.targetY - this.currentY)
+
+      if (!this.isHovered && deltaX < 0.05 && deltaY < 0.05) {
+        this.currentX = 0
+        this.currentY = 0
+        if (this.buttonElement) {
+          this.buttonElement.style.transform = 'translate3d(0, 0, 0)'
+        }
+        this.stopAnimation()
+        return
+      }
+
+      this.rafId = requestAnimationFrame(this.animate)
+    }
+
+    startAnimation() {
+      if (!this.rafId) {
+        this.rafId = requestAnimationFrame(this.animate)
+      }
+    }
+
+    stopAnimation() {
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId)
+        this.rafId = null
+      }
+    }
+
+    bindEvents() {
+      const target = this.wrapperElement
+      if (!target || !this.buttonElement) return
+
+      if (window.matchMedia('(pointer: fine)').matches) {
+        target.addEventListener('mouseenter', this.onMouseEnter)
+        target.addEventListener('mousemove', this.onMouseMove)
+        target.addEventListener('mouseleave', this.onMouseLeave)
+      }
+    }
+  }
+
+  new FloatingPlayButton()
+</script>
