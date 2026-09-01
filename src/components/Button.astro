@@ -2,14 +2,14 @@
 import type { HTMLAttributes } from 'astro/types'
 
 interface Props extends HTMLAttributes<'button'>, HTMLAttributes<'a'> {
-  class?: string
+  className?: string
   type?: 'button' | 'submit' | 'reset'
   href?: string
   isTransparent?: boolean
 }
 
 const {
-  class: className,
+  className,
   type = 'button',
   href,
   isTransparent = false,
