@@ -48,4 +48,10 @@ const motivations = [
       flex-direction: row-reverse;
     }
   }
+
+  @media (max-width: 767px) {
+    .motivation-item:nth-child(even) :global(.motivation-card) {
+      flex-direction: column-reverse;
+    }
+  }
 </style>
