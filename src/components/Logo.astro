@@ -4,30 +4,34 @@ import { Image } from 'astro:assets'
 import logo from '@/assets/images/logo.png'
 
 interface Props extends HTMLAttributes<'a'> {
-  width?: number | `${number}`
-  height?: number | `${number}`
+  width: number
+  height: number
   loading?: 'lazy' | 'eager'
-  imageClass?: string
 }
 
 const {
   href = '/',
+  width,
+  height,
   class: className,
-  width = 135,
-  height = 25,
   loading = 'eager',
-  imageClass,
+  title = 'Home',
   ...rest
 } = Astro.props
 ---
 
-<a href={href} class={className} {...rest}>
+<a
+  href={href}
+  class:list={['logo', className]}
+  title={title}
+  aria-label={title}
+  {...rest}
+>
   <Image
-    class={imageClass}
     src={logo}
     alt="Kropp Logo"
-    width={Number(width)}
-    height={Number(height)}
+    width={width}
+    height={height}
     loading={loading}
   />
 </a>
