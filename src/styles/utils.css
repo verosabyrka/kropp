@@ -4,6 +4,11 @@
   padding-inline: var(--container-padding-x);
 }
 
+.container-wide {
+  max-width: 1920px;
+  margin-inline: auto;
+}
+
 .title-big {
   font-size: clamp(24px, 3.12vw, 60px);
 }
