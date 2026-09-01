@@ -1,18 +1,16 @@
 ---
-import { Image } from 'astro:assets'
-import logo from '@/assets/images/logo.png'
+import Logo from '@/components/Logo.astro'
 import Button from '@/components/Button.astro'
 ---
 
 <header class="header">
-  <a class="header-logo" href="/">
-    <Image
-      class="header-logo-image"
-      src={logo}
-      alt="Kropp Logo"
-      width="135" height="25"
-    />
-  </a>
+  <Logo
+    class="header-logo"
+    imageClass="header-logo-image"
+    width="135"
+    height="25"
+    loading="eager"
+  />
   <nav class="header-menu">
     <ul class="header-menu-list">
       <li class="header-menu-item">
