@@ -1,5 +1,7 @@
 # Astro Starter Kit: Basics
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/754c3f54-4e73-46ee-aaff-fa0e63258241/deploy-status)](https://app.netlify.com/projects/sz-kropp/deploys)
+
 ```sh
 pnpm create astro@latest -- --template basics
 ```
