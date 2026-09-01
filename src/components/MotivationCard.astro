@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import Button from '@/components/Button.astro'
+
+interface Props {
+  title: string
+  dataTitle: string
+  description: string
+  image: {
+    src: ImageMetadata
+    alt: string
+  }
+}
+
+const {
+  title,
+  dataTitle,
+  description,
+  image,
+} = Astro.props
+---
+
+<div class="motivation-card container">
+  <div class="motivation-card-body">
+    <h3
+      class="motivation-card-title backdrop-title title-medium"
+      data-title={dataTitle}
+      set:html={title}
+    />
+    <div class="motivation-card-description">
+      <p>{description}</p>
+    </div>
+    <Button class="motivation-card-button" href="/" isTransparent>
+      View more
+    </Button>
+  </div>
+  <Image
+    class="motivation-card-image"
+    src={image.src}
+    alt={image.alt}
+    width={518}
+    height={750}
+  />
+</div>

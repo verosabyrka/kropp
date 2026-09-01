@@ -1,0 +1,39 @@
+---
+import MotivationCard from '@/components/MotivationCard.astro'
+import motivationImage1 from '@/assets/images/motivation/1.jpg'
+import motivationImage2 from '@/assets/images/motivation/2.jpg'
+
+const motivations = [
+  {
+    title: 'Be you, just stronger!<br />Power is in you',
+    dataTitle: 'Strong',
+    description: 'Unum solum justo ex ius. Pro cu probo laboramus eius insolens euripidis te eos, ut agam tota.',
+    image: {
+      src: motivationImage1,
+      alt: 'A man pulling himself up on a horizontal bar',
+    },
+  },
+  {
+    title: 'Today is the best<br />day to start!',
+    dataTitle: 'Start',
+    description: 'Sed abhorreant constituam consectetuer eu. At mei clita deserunt, his movet molestie nemore.',
+    image: {
+      src: motivationImage2,
+      alt: 'Man with dumbbells',
+    },
+  },
+]
+---
+
+<section class="motivation">
+  <h2 class="visually-hidden">Motivation</h2>
+  <ul class="motivation-list">
+    {
+      motivations.map((item) => (
+        <li class="motivation-item">
+          <MotivationCard {...item} />
+        </li>
+      ))
+    }
+  </ul>
+</section>
