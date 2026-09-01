@@ -279,10 +279,8 @@ const activityFactorOptions = [
     &:not(:last-child) {
       margin-bottom: 26px;
     }
-  }
 
-  .calculate-input {
-    &.wide {
+    :global(.calculate-input.wide) {
       grid-column: -1 / 1;
     }
   }
