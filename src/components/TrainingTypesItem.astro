@@ -31,7 +31,7 @@ const { title, image, ...rest } = Astro.props
     align-items: center;
     row-gap: 32px;
     padding-top: var(--trainingTypesItemBgIconSize);
-    background: url('../assets/icons/transparent-arrow-bottom-left.svg') 100% 0 / var(--trainingTypesItemBgIconSize) no-repeat;
+    background: url('@/assets/icons/transparent-arrow-bottom-left.svg') 100% 0 / var(--trainingTypesItemBgIconSize) no-repeat;
   }
 
   .training-types-image {
@@ -41,5 +41,17 @@ const { title, image, ...rest } = Astro.props
 
   .training-types-item-title {
     font-size: 16px;
+  }
+
+  @media (max-width: 767px) {
+    .training-types-item {
+      --trainingTypesItemBgIconSize: 50px;
+
+      row-gap: 10px;
+    }
+
+    .training-types-image {
+      max-width: 120px;
+    }
   }
 </style>
