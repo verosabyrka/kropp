@@ -1,12 +1,15 @@
 :root {
   --color-light: #fff;
+
   --color-dark: #000;
   --color-dark-alt: #131619;
+
   --color-light-gray: #c4c4c4;
   --color-dark-gray: #404040;
   --color-dark-gray-alt: #707070;
 
   --border: 1px solid var(--color-light);
+
   --border-radius: 30px;
 
   --font-family-base: 'Heebo', sans-serif;
@@ -20,4 +23,16 @@
   --transition-duration: 0.2s;
 
   --header-height: 90px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 92px;
+  }
 }
