@@ -12,6 +12,9 @@ import Header from '@/components/Header.astro'
   </head>
   <body>
     <Header />
-    <slot />
+    <main class="content">
+      <h1 class="visually-hidden">Kropp Fitness Club</h1>
+      <slot />
+    </main>
   </body>
 </html>
