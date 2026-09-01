@@ -1,27 +1,70 @@
 ---
 import { Image } from 'astro:assets'
 import mapImage from '@/assets/images/map.jpg'
+import Button from '@/components/Button.astro'
 ---
 
-<section class="location container-wide">
-  <Image
-    class="location-map-image"
-    src={mapImage}
-    alt="Branches on the map"
-    width="960" height="600"
-  />
-  <div class="location-body">
-    <h2
-      class="location-title title-medium backdrop-title centered"
-      data-title="Look"
-    >
-      Find us near you
-    </h2>
-    <div class="location-description">
-      <p>Nec suas signiferumque id. An eum labore commodo principes. Usu diam noluisse cu, nam adipisci</p>
+<section class="location">
+  <div class="location-inner container-wide">
+    <Image
+      class="location-map-image"
+      src={mapImage}
+      alt="Branches on the map"
+      width="960" height="600"
+    />
+    <div class="location-body">
+      <h2
+        class="location-title title-medium backdrop-title centered"
+        data-title="Look"
+      >
+        Find us near you
+      </h2>
+      <div class="location-description">
+        <p>Nec suas signiferumque id. An eum labore commodo principes. Usu diam noluisse cu, nam adipisci</p>
+      </div>
+      <Button
+        class="location-button"
+        href="/"
+        isTransparent
+      >
+        View more
+      </Button>
     </div>
-    <a class="location-button button transparent" href="/">
-      View more
-    </a>
   </div>
 </section>
+
+<style>
+  .location {
+    background-color: var(--color-dark);
+  }
+
+  .location-inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .location-map-image {
+    height: auto;
+  }
+
+  .location-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 15px;
+    text-align: center;
+  }
+
+  .location-title:not(:last-child) {
+    margin-bottom: 14px;
+  }
+
+  .location-description {
+    max-width: 490px;
+
+    &:not(:last-child) {
+      margin-bottom: 37px;
+    }
+  }
+</style>
