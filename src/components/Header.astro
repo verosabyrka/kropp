@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import logo from '@/assets/images/logo.png'
+import Button from '@/components/Button.astro'
 ---
 
 <header class="header">
@@ -32,12 +33,9 @@ import logo from '@/assets/images/logo.png'
     </ul>
   </nav>
   <div class="header-actions">
-    <button
-      class="header-book-button button"
-      type="button"
-    >
+    <Button class="header-book-button">
       Book now
-    </button>
+    </Button>
     <button
       class="header-burger-button"
       type="button"
