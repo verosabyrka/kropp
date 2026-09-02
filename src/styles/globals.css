@@ -27,6 +27,11 @@ html {
   }
 }
 
+::selection {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
 body {
   font-family: var(--font-family-base);
   font-weight: 300;
